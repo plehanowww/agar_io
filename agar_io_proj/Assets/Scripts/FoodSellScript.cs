@@ -18,11 +18,9 @@ public class FoodSellScript : MonoBehaviour
     public void EatDestroy()
     {
         if (foodAfterDeath)
-        {
-            print("do 1");
+        {        
             if (GetComponentInParent<FoodSpawner>())
-            {
-                print("do 2");
+            {           
                 GetComponentInParent<FoodSpawner>().Spawn();
             }
         }

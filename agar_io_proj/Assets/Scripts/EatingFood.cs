@@ -29,11 +29,4 @@ public class EatingFood : MonoBehaviour
         }
     }
     Vector2 foodPos;
-    void IsCenterInside(GameObject obj)
-    {
-        if (Vector2.Distance(obj.transform.position, transform.position)  <= collider.radius)
-        {
-
-        }
-    }
 }

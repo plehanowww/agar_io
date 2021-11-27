@@ -6,6 +6,9 @@ public class CellController : MonoBehaviour
 {
     Rigidbody2D rb;
     [SerializeField] float speed;
+
+    [Range(0, 5f)]
+    float mouseSpeedModifier = 1;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -13,19 +16,21 @@ public class CellController : MonoBehaviour
     float xInput;
     float yInput;
     Vector2 mousePos;
-    // Update is called once per frame
+
     void Update()
     {
-        //print(Physics2D.OverlapCircle(new Vector2(0, 0), 2));
+        ChangeSpeedByMouse();
         xInput = Input.GetAxis("Horizontal");
         yInput = Input.GetAxis("Vertical");
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
     private void FixedUpdate()
     {    
-        //rb.velocity = new Vector2(xInput, yInput) * speed * Time.deltaTime
-        //rb.velocity = mousePos * speed * Time.deltaTime;
-        rb.position = Vector3.MoveTowards(transform.position, mousePos, speed * Time.deltaTime);
-
+        rb.position = Vector3.MoveTowards(transform.position, mousePos, speed * mouseSpeedModifier * Time.deltaTime);
+    }
+    void ChangeSpeedByMouse()
+    {
+        float distance = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position);
+        mouseSpeedModifier = distance / 10;
     }
 }
