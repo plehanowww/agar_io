@@ -12,15 +12,20 @@ public class CellController : MonoBehaviour
     }
     float xInput;
     float yInput;
+    Vector2 mousePos;
     // Update is called once per frame
     void Update()
     {
+        //print(Physics2D.OverlapCircle(new Vector2(0, 0), 2));
         xInput = Input.GetAxis("Horizontal");
         yInput = Input.GetAxis("Vertical");
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
     private void FixedUpdate()
-    {
-        //rb.AddForce(new Vector2(xInput, yInput) * speed * Time.deltaTime, ForceMode2D.Impulse);
-        rb.velocity = new Vector2(xInput, yInput) * speed * Time.deltaTime;
+    {    
+        //rb.velocity = new Vector2(xInput, yInput) * speed * Time.deltaTime
+        //rb.velocity = mousePos * speed * Time.deltaTime;
+        rb.position = Vector3.MoveTowards(transform.position, mousePos, speed * Time.deltaTime);
+
     }
 }

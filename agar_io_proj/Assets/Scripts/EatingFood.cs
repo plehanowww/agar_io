@@ -22,7 +22,7 @@ public class EatingFood : MonoBehaviour
                 if (offset <= collider.bounds.size.x / 2)
                 {
                     GetComponent<PlayerStats>().EatingFood(valuePerFoodCell);
-                    Destroy(collision.gameObject);
+                    collision.GetComponent<FoodSellScript>().EatDestroy();
                 }
                 //print(GetComponent<SpriteRenderer>().bounds.size.x);               
             }
