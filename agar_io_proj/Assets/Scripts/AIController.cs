@@ -16,46 +16,63 @@ public class AIController : MonoBehaviour
         collider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         radius = startRadius;
-        FindFood();
     }
     Ray2D ray;
     float radius;
     RaycastHit2D hitRay;
-    void Update()
+    void FixedUpdate()
     {
        if (target)
        {
             rb.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
        } else
        {
-            FindFood();         
+            FindFood();               
        }
        
-    }  
+    }
+
+    public float newRadius;
 
 
+    Collider2D[] results;
+    float[] distances;
     void FindFood()
-    { 
-        for (int trying = 1; !target ; trying++)
-        {
-            hitRay = Physics2D.CircleCast(transform.position, radius * trying, Vector2.right);
-            print(trying);
-            if (hitRay && hitRay.transform.CompareTag("Food"))
+    {
+
+        var hitRay = Physics2D.OverlapCircleAll(transform.position, newRadius);
+        distances = new float[hitRay.Length];
+        for (int i = 0; i < hitRay.Length; i++)
+        {          
+            print(hitRay[i]);
+            distances[i] = Vector2.Distance(transform.position, hitRay[i].transform.position);
+            print(distances[i]);
+            if (hitRay[i].gameObject == transform.gameObject)
             {
-                print("find");
-                target = hitRay.transform;
-                break;
-            }            
-        }               
+                distances[i] = 10000;
+            }           
+        }
+
+        float minimum = Mathf.Min(distances);
+
+        for (int i =0; i<distances.Length;i++)
+        {
+            if (distances[i] == minimum)
+            {
+                target = hitRay[i].transform;
+            }
+        }
+        
+
+
+
+
+
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, newRadius);
     }
-    void FindWithRays()
-    {
-        RaycastHit2D[] RaycastAll();
 
-    }
 }

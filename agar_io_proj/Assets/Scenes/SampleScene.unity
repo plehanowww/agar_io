@@ -499,6 +499,8 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 5
   startRadius: 1
+  speedBySize: 1
+  newRadius: 0
 --- !u!212 &1454978413
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -607,6 +609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 0
   startSize: 7
+  player: 0
 --- !u!50 &1454978418
 Rigidbody2D:
   serializedVersion: 4
@@ -731,6 +734,7 @@ GameObject:
   - component: {fileID: 1796977611}
   - component: {fileID: 1796977615}
   - component: {fileID: 1796977614}
+  - component: {fileID: 1796977617}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -815,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a25efd6d0ee79f4991ca47a79c49103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 0
   speedBySize: 0
 --- !u!50 &1796977612
 Rigidbody2D:
@@ -868,6 +872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 0
   startSize: 7
+  player: 1
 --- !u!114 &1796977615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,3 +898,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09115f98367976a41a3a6a508525f6b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1796977617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796977608}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ac65a40637dad4396dce09f8f172af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets: []
+  radius: 3.25

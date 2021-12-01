@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     CellController controller;
     AIController aiController;
     Vector2 normalSize;
-    bool player;
+    [SerializeField] bool player;
     private void Start()
     {
         if (player)
