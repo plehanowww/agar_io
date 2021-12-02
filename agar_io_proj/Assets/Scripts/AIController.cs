@@ -43,10 +43,8 @@ public class AIController : MonoBehaviour
         var hitRay = Physics2D.OverlapCircleAll(transform.position, newRadius);
         distances = new float[hitRay.Length];
         for (int i = 0; i < hitRay.Length; i++)
-        {          
-            print(hitRay[i]);
-            distances[i] = Vector2.Distance(transform.position, hitRay[i].transform.position);
-            print(distances[i]);
+        {                     
+            distances[i] = Vector2.Distance(transform.position, hitRay[i].transform.position);           
             if (hitRay[i].gameObject == transform.gameObject)
             {
                 distances[i] = 10000;

@@ -31,30 +31,54 @@ public class PlayerStats : MonoBehaviour
         if (player)
         {
             GetComponent<CameraScaling>().ScaleUp();
+            if (GetComponent<ScoreCounter>())
+            {
+                GetComponent<ScoreCounter>().ChangeScore(size);
+            }            
         }      
     }
     public void LosingFood(int counts)
     {
         size -= counts;
-        transform.localScale = transform.localScale - new Vector3(0.013f, 0.013f, 0);
+        transform.localScale = Vector3.Lerp(transform.localScale, transform.localScale + new Vector3(0.15f, 0.15f, 0), Time.deltaTime);
+        LoseSpeed(-0.005f);
         if (player)
         {
             GetComponent<CameraScaling>().ScaleDown();
+            if (GetComponent<ScoreCounter>())
+            {
+                GetComponent<ScoreCounter>().ChangeScore(size);
+            }
         }       
     }
     void LoseSpeed(float speed)
     {
-        if (size < 58)
+        
+        
+        if (player)
         {
-            if (player)
+            if (size < 58)
             {
                 controller.speedBySize -= speed;
+            } else if (size > 58 && size < 250)
+            {
+                controller.speedBySize -= speed / 2;
             }
-            else
+               
+        }
+        else
+        {
+            if (size < 58)
             {
                 aiController.speedBySize -= speed;
             }
+            else if (size > 58 && size < 250)
+            {
+                controller.speedBySize -= speed / 2;
+            }
+
+        }
            
-        }       
+               
     }
 }

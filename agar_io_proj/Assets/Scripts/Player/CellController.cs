@@ -31,7 +31,10 @@ public class CellController : MonoBehaviour
     {
         float generalModifier = speed * mouseSpeedModifier * speedBySize;
 
+        
         rb.position = Vector3.MoveTowards(transform.position, mousePos, generalModifier * Time.deltaTime);
+        
+        
     }
     void ChangeSpeedByMouse()
     {
