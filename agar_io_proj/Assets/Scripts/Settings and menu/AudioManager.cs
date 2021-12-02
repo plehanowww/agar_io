@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    //синглтон для проигрывания музыки в меню и при переходе в игру. Содержит функции включения и отключения звука.
+
     public static AudioManager instance = null;
     [SerializeField] GameObject allMusic;
     [SerializeField] AudioSource backgroundMusic;
@@ -23,12 +25,8 @@ public class AudioManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        InitializeManager();
     }
-    private void InitializeManager()
-    {
 
-    }
     public void SetMusicActive(bool setting)
     {
         allMusic.SetActive(setting);

@@ -5,6 +5,8 @@ using Cinemachine;
 
 public class CameraScaling : MonoBehaviour
 {
+    //отдаление камеры в моменты поедани€ еды и ботов. »спользова плагин Cinemachine
+
     CinemachineVirtualCamera vcam;
     float normalSize;
     private void Start()
@@ -13,12 +15,9 @@ public class CameraScaling : MonoBehaviour
         normalSize = vcam.m_Lens.OrthographicSize;
     }
 
-    public void ScaleUp()
+    public void ScaleUp(float size) //плавное увеличение камеры
     {
-        vcam.m_Lens.OrthographicSize = Mathf.Lerp(vcam.m_Lens.OrthographicSize, vcam.m_Lens.OrthographicSize + 2.5f, Time.deltaTime);           
+        vcam.m_Lens.OrthographicSize = Mathf.Lerp(vcam.m_Lens.OrthographicSize,  vcam.m_Lens.OrthographicSize + size* 2.5f, Time.deltaTime);           
     }
-    public void ScaleDown()
-    {
-        //vcam.m_Lens.OrthographicSize *= 1.1f;
-    }
+
 }

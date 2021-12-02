@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerSettings : MonoBehaviour
 {
+    //функция для сохранения настроек в этот скрипт
     public bool gameStarted;
     Color newColor;
     [SerializeField] Slider sliderColor;
@@ -14,10 +15,10 @@ public class PlayerSettings : MonoBehaviour
     {
         if (!gameStarted)
         {
-        
+
             colorH = sliderColor.value;
-            
-                    
+
+
         }
     }
 }

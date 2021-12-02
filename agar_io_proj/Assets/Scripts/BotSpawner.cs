@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoodSpawner : MonoBehaviour
+public class BotSpawner : MonoBehaviour
 {
-    //скрипт спавна еды
-    [SerializeField] GameObject foodObject;
-    [SerializeField] int maxFood;
+    // спавнер врагов. Спавнит иногда не ровно врагов, хотел использовать эту конструкцию, но кажется лучше было заново сделать
+
+    [SerializeField] GameObject botObject;
+    [SerializeField] int maxBots;
     BoxCollider2D collider;
 
     float radius;
     float minX, maxX, minY, maxY;
 
-    //в начале игры забираем коллайдеры карты чтобы понимать где можем спавниить еду. После этого удаляем коллайдер и спавним еду
+    //в начале игры измеряем коллайдер, чтобы понимать где можно спавнить
     void Start()
     {
-        radius = foodObject.GetComponent<CircleCollider2D>().radius;
+        radius = botObject.GetComponent<CircleCollider2D>().radius;
         collider = GameObject.Find("Backround_grid").GetComponent<BoxCollider2D>();
         minX = collider.bounds.min.x; maxX = collider.bounds.max.x;
         minY = collider.bounds.min.y; maxY = collider.bounds.max.y;
 
-        Invoke("Spawning", Time.deltaTime);
+        Invoke("MassSpawn", 1);//скрипт с едой тоже работает с background и удаляет его. А так как новые штуки не могут заспавниттся в 
+        //коллайдерах, то ждем время чтобы его удалили и уже потом ставим врагов
 
     }
 
+    //функция массового спавна нужного количества врагов
     void MassSpawn()
     {
-        for (int i = 0; i <= maxFood - 1; i++ )
+        for (int i = 0; i <= maxBots; i++)
         {
             Spawn();
         }
@@ -42,9 +45,11 @@ public class FoodSpawner : MonoBehaviour
             float randomY = Random.Range(minY, maxY);
             Vector2 randomPos = new Vector2(randomX, randomY);
 
+
             if (Physics2D.OverlapCircle(randomPos, radius) == null)
             {
-                GameObject obj = Instantiate(foodObject, randomPos, foodObject.transform.rotation, gameObject.transform);
+                GameObject obj = Instantiate(botObject, randomPos, botObject.transform.rotation, gameObject.transform);
+                print(obj);
                 RandomColor(obj);
                 break;
             }
@@ -55,12 +60,5 @@ public class FoodSpawner : MonoBehaviour
     void RandomColor(GameObject obj)
     {
         obj.GetComponent<SpriteRenderer>().color = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
-    }
-    //функция нужна чтобы сделать небольшую задержку через invoke чтобы скрипт BotSpaner забрал данные бэкраунда перед удалением
-    void Spawning()
-    {
-        GameObject.Find("Backround_grid").GetComponent<BoxCollider2D>().enabled = false;
-
-        MassSpawn();
     }
 }

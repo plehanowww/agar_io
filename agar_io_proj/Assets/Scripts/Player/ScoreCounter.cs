@@ -6,9 +6,11 @@ using TMPro;
 
 public class ScoreCounter : MonoBehaviour
 {
+    //счетчик игрока
+
     [SerializeField] TMP_Text text;
 
-    public void ChangeScore(int score)
+    public void ChangeScore(float score)
     {
         text.text = "Score: " + (score * 10).ToString();
     }

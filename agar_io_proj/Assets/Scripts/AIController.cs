@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
+    //скрипт ботов. Пока его писал я чуть не поседел
+
     [SerializeField] Transform target;
     CircleCollider2D collider;
     [SerializeField] float speed;
@@ -17,15 +19,17 @@ public class AIController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         radius = startRadius;
     }
+
     Ray2D ray;
     float radius;
     RaycastHit2D hitRay;
+    //в следующей функции если нет цели, то ищем ее. Если есть цель, то направляем бота к ней
     void FixedUpdate()
     {
        if (target)
        {
             rb.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-       } else
+       } else if (target == null)
        {
             FindFood();               
        }
@@ -35,8 +39,11 @@ public class AIController : MonoBehaviour
     public float newRadius;
 
 
-    Collider2D[] results;
-    float[] distances;
+
+    //функция поиска еды. Реализована через OverlapCircleAll. Забираем все коллайдеры объектов в нужном радиусе newRadius
+    //далее сравниваем сколько расстояния до всех целей и выбираем наименьшее расстояние, потом идем к этой цели
+    Collider2D[] results; //массив со всеми объектами в радиусе
+    float[] distances; //массив с расстояниями до объектов
     void FindFood()
     {
 
@@ -45,22 +52,26 @@ public class AIController : MonoBehaviour
         for (int i = 0; i < hitRay.Length; i++)
         {                     
             distances[i] = Vector2.Distance(transform.position, hitRay[i].transform.position);           
-            if (hitRay[i].gameObject == transform.gameObject)
+            if (hitRay[i].gameObject == transform.gameObject) 
             {
-                distances[i] = 10000;
-            }           
+                distances[i] = 10000;//когда бот заносит себя в массив, то отмечаем что расстояние до самого себя будет очень большим чтобы не выбирал себя целью
+            }                   
         }
 
-        float minimum = Mathf.Min(distances);
+        float minimum = Mathf.Min(distances);//находим меньшее расстояние
 
         for (int i =0; i<distances.Length;i++)
         {
             if (distances[i] == minimum)
             {
-                target = hitRay[i].transform;
+                if (hitRay[i].CompareTag("Food"))
+                {
+                    target = hitRay[i].transform;// берем только объекты с едой
+                    
+                }
+                else break;
             }
         }
-        
 
 
 

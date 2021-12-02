@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SoundsScript : MonoBehaviour
 {
+    //функция для включения, управления музыкой
+
     [SerializeField] Slider slider;
     [SerializeField] Toggle toggle;
 

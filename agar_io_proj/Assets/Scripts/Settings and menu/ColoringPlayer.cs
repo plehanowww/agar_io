@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ColoringPlayer : MonoBehaviour
 {
+    //меняем цвет игрока в настроках в зависимости от ползунка. В префы сохраняем результат выбора
+
     [SerializeField] Slider slider;
     [SerializeField] Image player;
 

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int size;
+    //статистика бота\игрока, все функции уменьшени€ размера или отдалени€ камеры
+
+    public float size;
     [SerializeField] int startSize;
     CellController controller;
     AIController aiController;
@@ -23,20 +25,22 @@ public class PlayerStats : MonoBehaviour
         size = startSize;
         normalSize = new Vector2(0.2f, 0.2f);
     }
-    public void EatingFood(int counts)
+    //увеличиваем размер в зависимости от сьеденной еды counts
+    public void EatingFood(float counts)
     {      
         size += counts;
-        transform.localScale = Vector3.Lerp(transform.localScale, transform.localScale + new Vector3(0.15f, 0.15f, 0), Time.deltaTime);
+        transform.localScale = Vector3.Lerp(transform.localScale, transform.localScale + counts * new Vector3(0.15f, 0.15f, 0), Time.deltaTime);
         LoseSpeed(0.005f);
         if (player)
         {
-            GetComponent<CameraScaling>().ScaleUp();
+            GetComponent<CameraScaling>().ScaleUp(counts);
             if (GetComponent<ScoreCounter>())
             {
                 GetComponent<ScoreCounter>().ChangeScore(size);
             }            
         }      
     }
+    //функци€ уменьшени€ еды. Ќе используетс€ из за отсутстви€ умных ботов
     public void LosingFood(int counts)
     {
         size -= counts;
@@ -44,13 +48,14 @@ public class PlayerStats : MonoBehaviour
         LoseSpeed(-0.005f);
         if (player)
         {
-            GetComponent<CameraScaling>().ScaleDown();
+            //GetComponent<CameraScaling>().ScaleDown();
             if (GetComponent<ScoreCounter>())
             {
                 GetComponent<ScoreCounter>().ChangeScore(size);
             }
         }       
     }
+    //уменьшение скорости из за переедани€
     void LoseSpeed(float speed)
     {
         
@@ -74,7 +79,7 @@ public class PlayerStats : MonoBehaviour
             }
             else if (size > 58 && size < 250)
             {
-                controller.speedBySize -= speed / 2;
+                aiController.speedBySize -= speed / 2;
             }
 
         }
